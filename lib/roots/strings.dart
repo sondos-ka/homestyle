@@ -1,0 +1,1 @@
+String appName='HOME STYLE';
