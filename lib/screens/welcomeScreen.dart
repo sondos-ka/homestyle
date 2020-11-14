@@ -1,4 +1,5 @@
 import 'package:animated_text/animated_text.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -103,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     TweenAnimationBuilder(
                       duration: Duration(seconds: 2),
                       tween:AlignmentGeometryTween(begin: Alignment.bottomLeft,end: Alignment.topLeft),
-                        builder:(_, align, a) {
+                          builder:(_, align, a) {
                           return Container(
                             alignment: align,
                             decoration: BoxDecoration(color: logoBlack),

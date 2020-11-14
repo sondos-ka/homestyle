@@ -27,6 +27,7 @@ dependencies:
 
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,6 +47,10 @@ flutter:
     - family: NothingYouCouldDo-Regular
       fonts:
           - asset: fonts/NothingYouCouldDo-Regular.ttf
+
+    - family: Scheherazade-Regular
+      fonts:
+          - asset: fonts/Scheherazade-Regular.ttf
 
 
 
