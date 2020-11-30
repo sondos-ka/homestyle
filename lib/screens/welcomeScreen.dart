@@ -3,8 +3,12 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+
 import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/screens/loginScreen.dart';
+import 'package:homestyle/screens/menuScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -13,20 +17,34 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
+
+
+
   AnimationController _animationController;
   Animation _sizeAnimation;
-
+  GraphQLConfiguration configuration = GraphQLConfiguration();
 
       @override
   void initState() {
     super.initState();
 
-    new Future.delayed(
+    new Future.delayed (
         const Duration(seconds: 6),
-            () => Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => loginScreen()),
-        ));
+            () async{
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              var curUser= prefs.getString('username');
+
+              Navigator.pushReplacement(
+
+                  context,
+                  MaterialPageRoute(builder: (context) => GraphQLProvider(
+                    child:curUser==null ? loginScreen(): menuScreen(),
+                    client: configuration.client,),
+                  ));
+
+
+            })
+    ;
 
 
 
@@ -46,8 +64,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
 
   return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(color: logoBlack),
+      body:  Container(
+        decoration: BoxDecoration(color: clogoBlack),
         child: Center(
           child: Column(
 
@@ -69,7 +87,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           builder: (context, child) => Container(
                             width: _sizeAnimation.value,
                             height:100,
-                            child: Container(
+                            child: Hero(
+                              tag: 'logo',
                                 child:Image.asset('images/logoHomeScreen.png')),
                           ),
                         ),
@@ -79,7 +98,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         Container(
                           width: MediaQuery.of(context).size.width,
                           height: 60,
-                          decoration: BoxDecoration(color: logoBlack),
+                          decoration: BoxDecoration(color: clogoBlack),
                           //the description code
                           child: AnimatedText(
                             alignment: Alignment.center,
@@ -90,7 +109,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             textStyle: TextStyle(
                                 color: Colors.white,
                                 fontSize: 35,
-                                fontFamily: logoDescrebtionFont,
+                                fontFamily: fLogoDescrebtionFont,
                                 fontWeight: FontWeight.w100),
                           ),
                         ),
@@ -100,14 +119,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ],
                     ),
 
-
                     TweenAnimationBuilder(
                       duration: Duration(seconds: 2),
                       tween:AlignmentGeometryTween(begin: Alignment.bottomLeft,end: Alignment.topLeft),
                           builder:(_, align, a) {
                           return Container(
                             alignment: align,
-                            decoration: BoxDecoration(color: logoBlack),
+                            decoration: BoxDecoration(color: clogoBlack),
                             height:200,
 
                             child: Image.asset('images/logoOrangeLine.png'),

@@ -1,60 +1,99 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'constant.dart';
 
 
 //AppBar Background and image
-Widget appBarWidget= AppBar(
-  flexibleSpace: Image(
-    image: AssetImage('images/logoAppBar.png'),
-    fit: BoxFit.cover,
+Widget appBarWidget(Function logout){
+  return AppBar(
+title:Padding(
+  padding: const EdgeInsets.only(bottom: 15),
+  child:   Container(
+    width:250,
+
+    child: Image.asset('images/logoHomeScreen.png'),
   ),
-  centerTitle: true,
-  backgroundColor: logoColor,
-);
+) ,
 
+  actions: <Widget>[
+    Container(child: IconButton(
+    icon:Icon( Icons.power_settings_new,color: cLogoColor),
+      onPressed:logout
 
-var textInputDecoration=TextFormField(
-
-  textAlign: TextAlign.center,
-  textAlignVertical:TextAlignVertical(y: -1.0),
-
-  initialValue: 'البريد الالكتروني',
-  style: TextStyle(fontFamily: arabicFont,fontSize: 20 ,color: Colors.grey)
-  ,
-  decoration: InputDecoration(
-    border: OutlineInputBorder(),
-    suffixIcon: Icon(
-      Icons.mail  ,color: logoColor,
     ),
+    )
+  ],
+
+
+
+
+  centerTitle: true,
+  backgroundColor: clogoBlack,
+);
+}
+
+
+//text field
+Widget textInputDecoration(
+    String hint ,Icon icon ,type,bool obscure, controller){
+  return TextFormField(
+    controller: controller,
+  textAlign: TextAlign.center,
+    keyboardType: type,
+  obscureText: obscure,
+  style: TextStyle(fontFamily: fArabicFont,fontSize: 25 ,color: Colors.white),
+  decoration: InputDecoration(
+    hintText: hint,
+    hintStyle: TextStyle(fontFamily: fArabicFont,),
+    contentPadding: EdgeInsets.only(top: 5),
+    border: OutlineInputBorder(),
+    suffixIcon: icon,
+
   ),
 );
+}
 
-var awsomeButton=Container(
-  height: 50.0,
-  margin: EdgeInsets.all(10),
-  child: RaisedButton(
-    onPressed: () {},
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(80.0)),
-    padding: EdgeInsets.all(0.0),
-    child: Ink(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [ logoColor,lightOrange ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
+
+
+
+
+//awsome button
+
+Widget awsomeButton(String buttonText,Function onpressed) {
+  return Container(
+    height: 50.0,
+    margin: EdgeInsets.all(20),
+    child: RaisedButton(
+      onPressed: () { onpressed();},
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(80.0)),
+      padding: EdgeInsets.all(0.0),
+      child: Ink(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.white, clightOrange],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+            borderRadius: BorderRadius.circular(30.0)),
+        child: Container(
+          constraints:
+          BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
+          alignment: Alignment.center,
+          child: Text(buttonText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black, fontSize:20, fontFamily: fArabicFont),
           ),
-          borderRadius: BorderRadius.circular(30.0)),
-      child: Container(
-        constraints:
-        BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
-        alignment: Alignment.center,
-        child: Text(
-          "تسجيل الدخول",
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black, fontSize: 25,fontFamily: arabicFont),
         ),
       ),
     ),
-  ),
-);
+  );
+}
+
+
+
+
+
