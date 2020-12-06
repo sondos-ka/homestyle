@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'constant.dart';
 
 
@@ -12,6 +12,7 @@ title:Padding(
   padding: const EdgeInsets.only(bottom: 15),
   child:   Container(
     width:250,
+    height: 81,
 
     child: Image.asset('images/logoHomeScreen.png'),
   ),

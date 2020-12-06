@@ -33,7 +33,6 @@ class _loginScreenState extends State<loginScreen>   with TickerProviderStateMix
       body:SingleChildScrollView(
         child:Container(
 
-
         decoration: BoxDecoration(
          image: DecorationImage(image: AssetImage("images/backgroundWithGift.png"), fit: BoxFit.cover),
                  ),

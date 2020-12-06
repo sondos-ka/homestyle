@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+
 
 import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/roots/strings.dart';
-import 'package:homestyle/screens/loginScreen.dart';
-import 'package:homestyle/screens/testScreen.dart';
 import 'package:homestyle/screens/welcomeScreen.dart';
 //GraphQLConfiguration config= GraphQLConfiguration();
 void main() {

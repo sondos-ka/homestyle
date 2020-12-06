@@ -59,6 +59,8 @@ const queryAddUser = '''
 }
 ''';
 
+
+
 const mutationLogInUser = '''
   mutation login( \$name:String!,\$password:String! ){
 users{
@@ -69,3 +71,23 @@ users{
 }
 ''';
 
+
+const findProductCategory="""
+query (\$cat:Float!){
+  objects{
+    findproduct(where:{category:{_eq:\$cat}}){
+      count
+      results{
+        productname
+        image
+        
+       
+      }
+    }
+    
+  }
+  
+}
+
+
+""";

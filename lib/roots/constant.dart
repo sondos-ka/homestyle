@@ -4,6 +4,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:homestyle/roots/strings.dart';
 
 
+int currentCategory=0;
+
 //logo
 const Color cLogoColor= Color(0xFFf48e2c);
 const Color clightOrange=Color(0xFFf4ae52);
@@ -11,8 +13,17 @@ const Color clogoBlack=Color(0xFF090909);
 const Color croseBlue=Color(0xFF4d5b80);
 const Color cchairBrown=Color(0xFF523e32);
 const Color cBathroomGrey=Color(0xFF838377);
-
-
+const Color cCat123=Color(0xFFdad1c8);
+const Color cCat4=Color(0xFFbfb5b3);
+const Color cCat5=Color(0xFFbfc0b8);
+const Color cCat6=Color(0xFFc0c6d2);
+const Color cCat7=Color(0xFFf2f0f1);
+const Color cCat8=Color(0xFF93a1a4);
+const Color cCat9=Color(0xFFe4e3e8);
+const Color cCat10=Color(0xFFafb5b1);
+const Color cCat11=Color(0xFFc7d9ef);
+const Color cCat12=Color(0xFFefeff1);
+const Color cCat13=Color(0xFFdceae0);
 
 
 const String fLogoFont='Orbitron-Black';

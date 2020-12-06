@@ -4,6 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/roots/rootWidget.dart';
 import 'package:homestyle/screens/loginScreen.dart';
+import 'package:homestyle/screens/productScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -67,6 +68,17 @@ class _menuScreenState extends State<menuScreen> {
                         child: Text(categories[index].title,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
                   ),
                 ),
+                onLongPress: () {
+                  currentCategory=index+1;
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>
+                          GraphQLProvider(
+                            child: productScreen(),
+                            client: configuration.client,),
+                      ));
+                }
+                ,
               );
             }),
       ),
