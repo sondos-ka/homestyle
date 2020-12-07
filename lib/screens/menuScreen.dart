@@ -68,7 +68,7 @@ class _menuScreenState extends State<menuScreen> {
                         child: Text(categories[index].title,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
                   ),
                 ),
-                onLongPress: () {
+                onDoubleTap: () {
                   currentCategory=index+1;
                   Navigator.push(
                       context,

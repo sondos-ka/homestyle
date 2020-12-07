@@ -79,8 +79,7 @@ query (\$cat:Float!){
       count
       results{
         productname
-        image
-        
+        image        
        
       }
     }
@@ -91,3 +90,5 @@ query (\$cat:Float!){
 
 
 """;
+
+

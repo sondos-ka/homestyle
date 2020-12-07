@@ -97,4 +97,12 @@ Widget awsomeButton(String buttonText,Function onpressed) {
 
 
 
+Widget bottomSheet(String s){
 
+     Container(
+       height: 50,
+      padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 60.0),
+      child: Text('bottom sheet $s',style: TextStyle(color: Colors.white),),
+
+    );
+}
