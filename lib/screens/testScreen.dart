@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:homestyle/roots/dataBase.dart';
 import 'package:homestyle/roots/rootWidget.dart';
 
 class testSceen extends StatefulWidget {
@@ -10,24 +11,6 @@ class testSceen extends StatefulWidget {
 class _testSceenState extends State<testSceen> {
 
 
-  String query='''
-  query getAGameScore {
-  gameScore(id: "73pAQyx4gV") {
-    id
-    score
-    playerName
-    score
-    cheatMode
-    ACL {
-      public {
-        read
-        write
-      }
-    }
-  }
-}
-  ''';
-
   @override
   Widget build(BuildContext context) {
 
@@ -37,7 +20,9 @@ class _testSceenState extends State<testSceen> {
       appBar: appBarWidget((){}),
       body:  Query(
           options: QueryOptions(
-            documentNode: gql(query),
+            variables: {'userId':'HnQKXFmH2y',
+            'productId':'WdePSF7GsK'},
+            documentNode: gql(checkProductFavorite),
           ),
           builder:(QueryResult result, { Refetch refetch,FetchMore fetchMore,})
           {
@@ -45,7 +30,8 @@ class _testSceenState extends State<testSceen> {
               return Center(child: Text("Loading...",style: TextStyle(fontSize: 20.0),));
             }
             else{
-              return Text('done');
+              final List results=result.data["objects"]["findFavorite"]["results"];
+              return Text(results[0]["objectId"]);
             }
           },
       ),

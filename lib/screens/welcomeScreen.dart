@@ -19,7 +19,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     with TickerProviderStateMixin {
 
 
-
   AnimationController _animationController;
   Animation _sizeAnimation;
   GraphQLConfiguration configuration = GraphQLConfiguration();

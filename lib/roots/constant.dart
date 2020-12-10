@@ -96,6 +96,8 @@ class GraphQLConfiguration {
 
 
 
+
+
 //////////////////Graph Ql///////////////////
 
 /*final HttpLink httpLink = HttpLink(
@@ -193,3 +195,12 @@ return categories
 }
 
 }
+
+
+
+
+
+
+
+
+

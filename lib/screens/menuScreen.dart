@@ -69,7 +69,7 @@ class _menuScreenState extends State<menuScreen> {
                   ),
                 ),
                 onDoubleTap: () {
-                  currentCategory=index+1;
+                  currentCategory=index;
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>

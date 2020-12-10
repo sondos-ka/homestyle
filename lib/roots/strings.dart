@@ -16,4 +16,5 @@ String scat10='هدايا واكسسوارات أطفال';
 String scat11='خزن وحلول تخزين';
 String scat12='عروض مميزة';
 String scat13='مصنوعات وطنية';
+String scatDescription='خيارات غير محدودة من التحف والهدايا';
 
