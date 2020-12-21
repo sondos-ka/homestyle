@@ -13,76 +13,120 @@ class DataBase{
 
 
 const queryAddUser = '''
-  mutation signUp( \$name:String!,\$password:String! ){
- objects{
-  
-  create_User(
-    fields:{
-    username:\$name
-    password:\$password
-   
+ mutation Createuser(\$name:String!,\$password:String!){
+        createUser(input:
+          {
+            fields:
+            {username:\$name
+             password:\$password
+              
+            }
+          
+          }) {
+   user{
+      objectId
     }
-  )
- 
-  {
-    objectId
-    createdAt
   }
- 
-   
-}
-}
+  
+          }
+      
+      
+
 ''';
 
 
 
 const mutationLogInUser = '''
-  mutation login( \$name:String!,\$password:String! ){
-users{
-  logIn(username:\$name,password:\$password){
-    sessionToken
+mutation Createuser(\$name:String!,\$password:String!){
+        createUser(input:
+          {
+            fields:
+            {username:\$name
+             password:\$password
+              
+            }
+          
+          }) {
+   user{
+      objectId
+    }
   }
-  }  
-}
+  
+          }
+      
+      
 ''';
 
 
-const findProductCategory="""
-query (\$cat:Float!){
-  objects{
-    findproduct(where:{category:{_eq:\$cat}}){
-      count
-      results{
-        productname
-        image        
-       
-      }
-    }
+
+
+const query="""
+query Favorite(\$userId:String!,\$cat:Float!){
+  products(where:{category:{equalTo:\$cat}}
+){
+     count,
+	    edges{
+	      node{
+	 objectId
+	 productname
+	  image
+	      }
+	    }
     
   }
   
-}
-
-
-""";
-
-
-//check favorite
-const checkProductFavorite=
-
-""" query (\$userId: String! ,\$productId:String!) {
-objects{
-findFavorite(where:{userId:{_eq:\$userId},
-productId:{_eq:\$productId}
-}){
-count
-results{
-objectId
-
-}
-}
-
-}
-
+  
+  
+  favorites(where:{userId:{equalTo: \$userId},category:{equalTo:\$cat}
+  }){
+	    count,
+	    edges{
+	      node{
+	 objectId
+	 productId
+	 
+	      }
+	    }
+	  }
 }
 """;
+
+const addToFavorite='''
+
+mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!){
+        createFavorite(input:
+          {
+            fields:
+            {userId:\$userId
+              category:\$cat
+              productId:\$productId
+              
+            }
+          
+          }) {
+    favorite{
+      objectId
+    }
+  }
+  
+          }
+      
+''';
+const removeFromFavorite="""
+mutation deleteFavorite(\$favoriteId:ID!){ 
+  deleteFavorite (input:{id:\$favoriteId})     
+  { 
+    clientMutationId
+  }
+}
+
+""";
+/*mutation delete_all_articles {
+  objects{
+    deleteFavorite(
+    where: {productId:"nwV0PoSM1m" }
+    )
+    {
+    affected_rows
+    }
+    */

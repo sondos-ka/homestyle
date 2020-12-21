@@ -5,6 +5,7 @@ import 'package:homestyle/roots/strings.dart';
 
 
 int currentCategory=0;
+String curUser="";
 
 //logo
 const Color cLogoColor= Color(0xFFf48e2c);
@@ -69,52 +70,6 @@ class GraphQLConfiguration {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////////Graph Ql///////////////////
-
-/*final HttpLink httpLink = HttpLink(
-  uri: kUrl,
-  headers: {
-    'X-Parse-Application-Id' : kParseApplicationId,
-    'X-Parse-Client-Key' : kParseClientKey,
-    'X-Parse-Master-Key': kParseMasterKey,
-  },
-);
-
-ValueNotifier<GraphQLClient> client = ValueNotifier(
-  GraphQLClient(
-    cache: OptimisticCache(dataIdFromObject: typenameDataIdFromObject),
-    link: httpLink,
-  ),
-);*/
 
 
 
