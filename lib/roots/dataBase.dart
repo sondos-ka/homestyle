@@ -121,6 +121,44 @@ mutation deleteFavorite(\$favoriteId:ID!){
 }
 
 """;
+
+
+
+const favoriteMutation="""
+
+mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!,\$favoriteId:ID!){
+       
+  deleteFavorite (input:{id:\$favoriteId})     
+  { 
+    clientMutationId
+  }
+  
+  createFavorite(input:
+          {
+            fields:
+            {userId:\$userId
+              category:\$cat
+              productId:\$productId
+              
+            }
+          
+          }) {
+    favorite{
+      objectId
+    }
+  }
+  
+  
+  
+}
+
+  
+          
+
+  
+
+
+""";
 /*mutation delete_all_articles {
   objects{
     deleteFavorite(
