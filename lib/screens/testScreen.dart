@@ -14,7 +14,7 @@ class _testSceenState extends State<testSceen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBarWidget(() {}),
+        appBar: appBarWidget(() {},Text(''),Text('')),
         body:
         Text("objectId")
 

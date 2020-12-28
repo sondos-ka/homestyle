@@ -1,33 +1,93 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:homestyle/roots/strings.dart';
 
 import 'constant.dart';
 
 
-//AppBar Background and image
-Widget appBarWidget(Function logout){
+
+Widget appBarWidget(Function logout,Widget favorite,Widget chat ){
   return AppBar(
-title:Padding(
-  padding: const EdgeInsets.only(bottom: 15),
-  child:   Container(
+    titleSpacing: 0,
+    title:Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+      child:   Container(
+        width:450,
+        height: 81,
+
+
+        child: Row(
+          children: <Widget>[
+
+            Container(
+              height: 50,
+              width: 30,
+              child: favorite,
+
+            )
+
+,SizedBox(width: 20,),
+            Container(
+                width:200,
+                height: 81,
+                child: Hero(
+                    tag: 'logo',child: Image.asset('images/logoHomeScreen.png'))),
+            SizedBox(width: 20,),
+          Container(
+            height: 50,
+              width: 30,
+
+              child: chat
+
+
+      ),SizedBox(width: 10,),
+            Container(
+              height: 50,
+              width: 30,
+              child: IconButton(
+
+                icon:Icon( Icons.power_settings_new,color: cLogoColor,size: 22,),
+                onPressed:logout
+
+            ),
+            )
+
+          ],
+        ),
+      ),
+    ) ,
+
+    backgroundColor: clogoBlack,
+  );
+}
+
+
+//AppBar Background and image
+Widget appBarMenuWidget(Function logout ){
+  return AppBar(
+
+   title:Padding(
+   padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+    child:   Container(
     width:250,
     height: 81,
 
-    child: Image.asset('images/logoHomeScreen.png'),
+    child: Hero(
+      tag: 'logo',
+        child: Image.asset('images/logoHomeScreen.png')),
   ),
 ) ,
 
   actions: <Widget>[
+
     Container(child: IconButton(
-    icon:Icon( Icons.power_settings_new,color: cLogoColor),
+    icon:Icon( Icons.power_settings_new,color: cLogoColor,size: 22,),
       onPressed:logout
 
     ),
     )
   ],
-
-
 
 
   centerTitle: true,
@@ -105,4 +165,70 @@ Widget bottomSheet(String s){
       child: Text('bottom sheet $s',style: TextStyle(color: Colors.white),),
 
     );
+}
+
+
+
+Widget costumDialoge (String image,String message,String textButton,Function onPressed){
+  return Dialog(shape:RoundedRectangleBorder(
+    borderRadius:BorderRadius.circular(16),
+      ),
+      elevation: 0,
+    backgroundColor: Colors.transparent,
+    child:Container(
+
+      height: 300,
+      decoration: BoxDecoration(
+        color:Color(0XFF232323),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(17),
+        boxShadow: [BoxShadow(
+          color: clightOrange,
+          blurRadius: 5.0,
+          offset: Offset(0.0,3.0),
+        )]
+      ),
+      child: Center(
+        child: Column(children: <Widget>[
+          Container(
+            height: 100,
+            child: Image.asset(image),),
+
+          Container(
+            padding: EdgeInsets.fromLTRB(20,10,20,0),
+            child: Text(
+
+              message,
+              textAlign:TextAlign.center,
+              style:TextStyle(
+
+              fontFamily: fArabicFont,
+
+
+              fontSize: 25.0,
+
+            ) ,),
+          ),
+          SizedBox(height: 15,)
+          ,Align(
+            alignment: Alignment.bottomCenter,
+            child:RaisedButton(
+              color: clightOrange,
+              child: Text(textButton,style: TextStyle(fontWeight:FontWeight.w200,fontSize: 25,fontFamily: fArabicFont),),
+              onPressed: () { onPressed();},
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0)),)
+          )
+
+
+        ],
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,),
+      ),
+
+    ) ,
+   );
+
+
 }

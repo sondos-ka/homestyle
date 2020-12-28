@@ -17,4 +17,5 @@ String scat11='خزن وحلول تخزين';
 String scat12='عروض مميزة';
 String scat13='مصنوعات وطنية';
 String scatDescription='خيارات غير محدودة من التحف والهدايا';
-
+String sMessageRemoveAlert="اختر موافق إن كنت تود حذف الصورة من قائمة المفضلة";
+String sOk="موافق";

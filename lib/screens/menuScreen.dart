@@ -34,7 +34,7 @@ class _menuScreenState extends State<menuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: appBarWidget( ()async{
+      appBar: appBarMenuWidget( ()async{
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('username');
         Navigator.pushReplacement(
@@ -45,7 +45,7 @@ class _menuScreenState extends State<menuScreen> {
           ));
 
 
-      },),
+      }),
       body: SafeArea(
         child: ListView.builder(
             itemCount: categories.length,

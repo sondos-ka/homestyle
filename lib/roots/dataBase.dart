@@ -159,6 +159,49 @@ mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!,\$favori
 
 
 """;
+
+const getUserFavorite="""
+query (\$userId:String!){
+  favorites(where:{userId:{equalTo: \$userId}}){
+	    count,
+	    edges{
+	      node{
+	 objectId
+	 productId	 
+	   }
+	  }	   
+  }  
+}
+
+""";
+
+
+
+const getProductFromId="""
+
+
+query  (\$productId:[ID!]!){  
+  products(where:{objectId:{in:\$productId}}, order: category_ASC
+){
+     count,
+	    edges{
+	      node{
+	 objectId
+	 productname
+	image
+	category
+	      }
+	    }
+    
+  }
+  
+  
+  
+  
+}
+
+""";
+
 /*mutation delete_all_articles {
   objects{
     deleteFavorite(
