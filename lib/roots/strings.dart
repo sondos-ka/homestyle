@@ -19,3 +19,7 @@ String scat13='مصنوعات وطنية';
 String scatDescription='خيارات غير محدودة من التحف والهدايا';
 String sMessageRemoveAlert="اختر موافق إن كنت تود حذف الصورة من قائمة المفضلة";
 String sOk="موافق";
+String sFavorite="المفضلة";
+String sChat="المحادثة";
+String sHintWriteMessage="اكتب الرسالة";
+

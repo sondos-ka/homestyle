@@ -6,6 +6,7 @@ import 'package:homestyle/roots/rootWidget.dart';
 import 'package:homestyle/screens/loginScreen.dart';
 import 'package:homestyle/screens/productScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 
 class menuScreen extends StatefulWidget {
@@ -28,10 +29,18 @@ class _menuScreenState extends State<menuScreen> {
   void initState() {
     super.initState();
     categories = menuItems().createMenuItemList();
+
+  }
+  @override
+  void dispose() {
+
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: appBarMenuWidget( ()async{
@@ -44,8 +53,7 @@ class _menuScreenState extends State<menuScreen> {
             client: configuration.client,),
           ));
 
-
-      }),
+      },Text(""),Text("")),
       body: SafeArea(
         child: ListView.builder(
             itemCount: categories.length,

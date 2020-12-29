@@ -13,6 +13,7 @@ import 'package:homestyle/screens/productScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipedetector/swipedetector.dart';
 
+import 'chatScreen.dart';
 import 'loginScreen.dart';
 
 
@@ -41,10 +42,18 @@ class _favoriteScreenState extends State<favoriteScreen> {
     },
           Text(""),IconButton(
     icon:Icon( Icons.chat_bubble_outline,color: cLogoColor,size: 20),
-    onPressed:(){}
+    onPressed:(){
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => GraphQLProvider(
+            child:chatScreen(),
+            client: configuration.client,),
+          ));
+    }
 
     ),
-
+    MediaQuery.of(context).size.width
     ),
     body: SafeArea(
       child:Mutation(
@@ -70,10 +79,25 @@ class _favoriteScreenState extends State<favoriteScreen> {
 
               child: Column(
                 children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 55,
+                    decoration: BoxDecoration(color: clogoBlack),
+                    //the description code
+                    child:  Center(
+                      child: Text(sFavorite,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize:30,
+                            fontFamily: fArabicFont,
+                            fontWeight: FontWeight.w100),
+                      ),
+                    ),
+                  ),
 
 
                  Container(
-                    height: MediaQuery.of(context).size.height-81,
+                    height: MediaQuery.of(context).size.height-136,
                     decoration: BoxDecoration(
                       image: DecorationImage(image: AssetImage("images/background.jpg"),fit: BoxFit.cover),
                     ),
@@ -267,7 +291,11 @@ class _favoriteScreenState extends State<favoriteScreen> {
                                                                                 Navigator.pop(context);
                                                                                 int productIndex=products.indexOf(productFavorite[index2]["node"]['objectId']);
                                                                                 var objectId = objects[productIndex];
+
                                                                                 runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0});
+                                                                                setState(() {
+                                                                                  products.remove(productIndex);
+                                                                                });
                                                                               }
                                                                               );
                                                                             });
@@ -306,7 +334,11 @@ class _favoriteScreenState extends State<favoriteScreen> {
                                               Navigator.pop(context);
                                               int productIndex=products.indexOf(productFavorite[index2]["node"]['objectId']);
                                               var objectId = objects[productIndex];
+
                                               runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0});
+                                              setState(() {
+                                                products.remove(productIndex);
+                                              });
                                             }
                                             );
                                           });

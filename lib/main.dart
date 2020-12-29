@@ -26,12 +26,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
-        cursorColor: cLogoColor,
+        cursorColor: clightOrange,
         buttonColor:cLogoColor,
         accentColor: cLogoColor,
         primaryColor:cLogoColor,
-        textSelectionHandleColor: cLogoColor,
-          canvasColor: cLogoColor,
+        textSelectionHandleColor: Colors.transparent,
+          canvasColor:  Colors.transparent,
         textSelectionColor: clightOrange
 
       ),

@@ -7,8 +7,8 @@ import 'constant.dart';
 
 
 
-Widget appBarWidget(Function logout,Widget favorite,Widget chat ){
-  return AppBar(
+Widget appBarWidget(Function logout,Widget favorite,Widget chat,double width ){
+  return  width<500? AppBar(
     titleSpacing: 0,
     title:Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
@@ -27,7 +27,7 @@ Widget appBarWidget(Function logout,Widget favorite,Widget chat ){
 
             )
 
-,SizedBox(width: 20,),
+          ,SizedBox(width: 20,),
             Container(
                 width:200,
                 height: 81,
@@ -59,12 +59,12 @@ Widget appBarWidget(Function logout,Widget favorite,Widget chat ){
     ) ,
 
     backgroundColor: clogoBlack,
-  );
+  ):appBarMenuWidget(logout, favorite, chat);
 }
 
 
 //AppBar Background and image
-Widget appBarMenuWidget(Function logout ){
+Widget appBarMenuWidget(Function logout,Widget favorite,Widget chat  ){
   return AppBar(
 
    title:Padding(
@@ -80,6 +80,11 @@ Widget appBarMenuWidget(Function logout ){
 ) ,
 
   actions: <Widget>[
+  Container(child: favorite
+
+
+  ),
+  Container(child: chat),
 
     Container(child: IconButton(
     icon:Icon( Icons.power_settings_new,color: cLogoColor,size: 22,),
