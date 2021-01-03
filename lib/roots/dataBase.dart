@@ -202,6 +202,56 @@ query  (\$productId:[ID!]!){
 
 """;
 
+const getMessages="""
+query (\$userId:String!){
+  chats(where:{userId:{equalTo:\$userId}},order:createdAt_ASC){
+     count,
+	    edges{
+	      node{
+          userId
+          createdAt
+          message
+          isSender
+          isRead
+          
+        }
+        } 
+      }
+}""";
+
+const mutationAddMessage="""
+mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!){
+       
+ 
+  createChat(input:
+          {
+            fields:
+            {userId:\$userId
+           message:\$message
+          isSender:\$isSender
+              
+            }
+          
+          }) {
+    chat{
+      objectId
+      
+    }
+  }
+  
+  
+  
+}
+
+  
+          
+
+  
+
+
+
+
+""";
 /*mutation delete_all_articles {
   objects{
     deleteFavorite(
