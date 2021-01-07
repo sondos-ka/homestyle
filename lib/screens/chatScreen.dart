@@ -19,16 +19,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'favoriteScreen.dart';
 import 'loginScreen.dart';
 import 'package:flutter/services.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 
 final messageController = TextEditingController();
-final _cahtListController = ScrollController();
+// final _cahtListController = ScrollController();
 List messages = new List();
 List waitMessage=new List();
 List waitIsSender=new List();
 List isSender = new List();
 FocusNode messageFocusNode ;
-
+final ItemScrollController itemScrollController = ItemScrollController();
+final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
 
 
 class chatScreen extends StatefulWidget {
@@ -40,9 +42,8 @@ class _chatScreenState extends State<chatScreen> {
 
   @override
   void initState() {
+
     super.initState();
-
-
 
   }
 
@@ -54,7 +55,6 @@ class _chatScreenState extends State<chatScreen> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
-
 
       backgroundColor: clogoBlack,
       appBar: appBarWidget(() async {
@@ -100,10 +100,11 @@ class _chatScreenState extends State<chatScreen> {
 
                    Timer(
                           Duration(
-                             milliseconds:5000),
+                             milliseconds:3500),
                              () {
                               waitIsSender.clear();
                               waitMessage.clear();
+
                           } );
                         print('completed');
 
@@ -139,7 +140,7 @@ class _chatScreenState extends State<chatScreen> {
                       ),
                       child: Query(
                           options: QueryOptions(
-                            pollInterval: 10,
+                            pollInterval: 3,
                             variables: {
                               'userId': currentUser,
                             },
@@ -169,28 +170,31 @@ class _chatScreenState extends State<chatScreen> {
 
                                }
 
-                               Timer(
-                                   Duration(
-                                       milliseconds:100),
-                                       () => _cahtListController
-                                       .jumpTo(_cahtListController
-                                       .position
-                                       .maxScrollExtent));
+
                              }
+
 
                                return Column(
                                 children: <Widget>[
                                   Expanded(
-                                    child: ListView.builder(
+                                    child: ScrollablePositionedList.builder(
+                                     /*  ,
+                                        ,
+
+                                        */
 
 
-                                        controller: _cahtListController,
+                                        physics: const AlwaysScrollableScrollPhysics (),
 
+                                     initialScrollIndex:messages.length-1,
+                                       // addAutomaticKeepAlives: true,
+                                        itemScrollController: itemScrollController,
+                                        itemPositionsListener: itemPositionsListener,
                                         itemCount: waitMessage.length>0? waitMessage.length:messages.length,
-
                                         // itemExtent:(MediaQuery.of(context).size.height-80)/5,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+
                                           return ChatBubble(
                                             clipper: ChatBubbleClipper6(
                                               type:waitIsSender.length>0?(
@@ -275,7 +279,7 @@ class _chatScreenState extends State<chatScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(4),
                                               child: TextField(
-                                               // autofocus: true,
+
                                                 focusNode: messageFocusNode,
                                                   keyboardType:TextInputType.multiline,
                                                   maxLines: null,
@@ -326,47 +330,46 @@ class _chatScreenState extends State<chatScreen> {
                                               onPressed: () {
 
 
-                                              //
+
                                           setState(() {
-                                                  if(waitMessage.isEmpty){
-                                                  for (int i = 0; i < chat.length; i++) {
-                                                    waitMessage.insert(i, chat[i]["node"]['message']) ;
-                                                    waitIsSender.insert(i, chat[i]["node"]['isSender']) ;
+                                            if (waitMessage.isEmpty) {
+                                              for (int i = 0; i <
+                                                  chat.length; i++) {
+                                                waitMessage.insert(i,
+                                                    chat[i]["node"]['message']);
+                                                waitIsSender.insert(i,
+                                                    chat[i]["node"]['isSender']);
 
+                                              }
 
-                                                  }
-                                                  }
-
-
-                                                waitMessage.insert(waitMessage.length,
-                                                      messageController.text);
-                                                waitIsSender.insert(
-                                                    waitIsSender.length, true);
-                                              Timer(
-                                                      Duration(
-                                                          milliseconds:100),
-                                                      () => _cahtListController
-                                                          .jumpTo(_cahtListController
-                                                              .position
-                                                              .maxScrollExtent));
+                                            }    waitMessage.insert(
+                                                waitMessage.length,
+                                                messageController.text);
+                                            waitIsSender.insert(
+                                                waitIsSender.length, true);
 
 
 
-
-                                             });
+                                          });
                                                 runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true},);
                                              messageController.clear();
                                            messageFocusNode= FocusNode();
-                                             messageFocusNode.requestFocus();
-                                              //  SystemChannels.textInput.invokeMethod('TextInput.show');
-
-
-
-                                             //FocusScope.of(context).previousFocus();
+                                           messageFocusNode.requestFocus();
+                                        /*  Timer(
+                                              Duration(microseconds:2000),(){
+                                                print("timer");
+                                                print(waitMessage.length);
+                                                itemScrollController.scrollTo(
+                                                    index:waitMessage.length-1,
+                                                    duration: Duration(milliseconds: 2000),
+                                                    curve: Curves.easeInOutCubic);  //waitMessage.length>0?waitMessage.length-1:messages.length-1
+                                          }
+                                          );*/
 
 
 
                                               },
+
                                             ),
                                           )
                                         ],
