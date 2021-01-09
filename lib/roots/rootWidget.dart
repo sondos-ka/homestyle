@@ -235,5 +235,84 @@ Widget costumDialoge (String image,String message,String textButton,Function onP
     ) ,
    );
 
-
 }
+
+//MediaQuery.of(context).size.width
+//
+//
+
+
+Widget chatWriteMessage(width,messageFocusNode,messageController,Function onPressed){
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(
+        8, 0, 8, 10),
+    child: Row(
+      children: <Widget>[
+        Container(
+
+          width: width - 80,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius:
+              BorderRadius.circular(30)),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: TextField(
+              focusNode: messageFocusNode,
+              keyboardType:TextInputType.multiline,
+              maxLines: null,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontFamily: fArabicFont,
+                  fontSize: 25,
+                  color: clogoBlack),
+              controller: messageController,
+              decoration: InputDecoration(
+                hintText: sHintWriteMessage,
+                hintStyle: TextStyle(
+                    fontFamily: fArabicFont,
+                    color: clightOrange),
+                contentPadding:
+                EdgeInsets.fromLTRB(
+                    16, 6, 16, 0),
+                enabledBorder:
+                UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors
+                          .transparent),
+                ),
+                focusedBorder:
+                UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors
+                          .transparent),
+                ),
+
+              )
+              ,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 8,
+        ),
+        CircleAvatar(
+          radius: 25,
+          backgroundColor: clightOrange,
+          child: IconButton(
+            icon: Icon(
+              Icons.send,
+              color: clogoBlack,
+            ),
+            iconSize: 30,
+            onPressed: () {
+              onPressed();
+              },
+
+          ),
+        )
+      ],
+    ),
+  );
+}
+

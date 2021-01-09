@@ -126,7 +126,8 @@ mutation deleteFavorite(\$favoriteId:ID!){
 
 const favoriteMutation="""
 
-mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!,\$favoriteId:ID!){
+mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!,\$favoriteId:ID!
+,\$message:String!,\$isSender:Boolean!,\$img:String!){
        
   deleteFavorite (input:{id:\$favoriteId})     
   { 
@@ -148,12 +149,24 @@ mutation CreateObject(\$productId:String!,\$userId:String!,\$cat:Float!,\$favori
     }
   }
   
+  createChat(input:
+          {
+            fields:
+            {userId:\$userId
+           message:\$message
+          isSender:\$isSender
+          image:\$img            }
+          
+          }) {
+    chat{
+      objectId
+      
+    }
+  }
   
   
 }
 
-  
-          
 
   
 
@@ -213,6 +226,7 @@ query (\$userId:String!){
           message
           isSender
           isRead
+          image
           
         }
         } 
@@ -220,7 +234,7 @@ query (\$userId:String!){
 }""";
 
 const mutationAddMessage="""
-mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!){
+mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!,\$img:String!){
        
  
   createChat(input:
@@ -229,6 +243,7 @@ mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!){
             {userId:\$userId
            message:\$message
           isSender:\$isSender
+          image:\$img
               
             }
           

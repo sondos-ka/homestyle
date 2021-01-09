@@ -1,7 +1,5 @@
 import 'dart:async';
-
-
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,15 +20,45 @@ import 'package:flutter/services.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 
-final messageController = TextEditingController();
+
 // final _cahtListController = ScrollController();
 List messages = new List();
 List waitMessage=new List();
 List waitIsSender=new List();
+List waitImage=new List();
+
 List isSender = new List();
+List img=new List();
+final messageController = TextEditingController();
 FocusNode messageFocusNode ;
 final ItemScrollController itemScrollController = ItemScrollController();
 final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+
+bool checkIsImage(int i,List list1,List list2){
+  if(list1.length>0)
+    {
+      if(list1[i]==''){
+        return false;
+      }
+
+      return true;
+    }
+  else {
+
+    if(list2[i]==''){
+      return false;
+    }
+
+    return true;
+  }
+
+
+
+
+
+
+}
 
 
 class chatScreen extends StatefulWidget {
@@ -104,6 +132,7 @@ class _chatScreenState extends State<chatScreen> {
                              () {
                               waitIsSender.clear();
                               waitMessage.clear();
+                              waitImage.clear();
 
                           } );
                         print('completed');
@@ -162,12 +191,13 @@ class _chatScreenState extends State<chatScreen> {
                              List chat=result.data["chats"]["edges"];
                              messages.clear();
                             isSender.clear();
+                            img.clear();
 
                              if(chat.length> 0) {
                                for (int i = 0; i < chat.length; i++) {
                                  messages.insert(i, chat[i]["node"]['message']) ;
                                  isSender.insert(i, chat[i]["node"]['isSender']) ;
-
+                                 img.insert(i, chat[i]["node"]['image']);
                                }
 
 
@@ -187,6 +217,7 @@ class _chatScreenState extends State<chatScreen> {
                                         physics: const AlwaysScrollableScrollPhysics (),
 
                                      initialScrollIndex:messages.length-1,
+
                                        // addAutomaticKeepAlives: true,
                                         itemScrollController: itemScrollController,
                                         itemPositionsListener: itemPositionsListener,
@@ -194,6 +225,7 @@ class _chatScreenState extends State<chatScreen> {
                                         // itemExtent:(MediaQuery.of(context).size.height-80)/5,
                                         itemBuilder:
                                             (BuildContext context, int index) {
+
 
                                           return ChatBubble(
                                             clipper: ChatBubbleClipper6(
@@ -213,12 +245,14 @@ class _chatScreenState extends State<chatScreen> {
                                                 ? Alignment.topRight
                                                 : Alignment.topLeft),
                                             margin: EdgeInsets.all(5),
-                                            backGroundColor: waitIsSender.length>0?(waitIsSender[index]
+                                            backGroundColor:
+
+                                            waitIsSender.length>0?(waitIsSender[index]
                                                 ? cCat123
-                                                : clightOrange):
+                                                : Colors.grey[800]):
                                             (isSender[index]
                                                 ? cCat123
-                                                : clightOrange),
+                                                : Colors.grey[800]),
                                             child: Container(
                                               constraints: BoxConstraints(
                                                 maxWidth: MediaQuery.of(context)
@@ -230,8 +264,47 @@ class _chatScreenState extends State<chatScreen> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
-                                                        6, 0, 6, 0),
-                                                child: Text(
+                                                        14, 0, 8, 0),
+                                                child: checkIsImage(index, waitImage, img)?
+                                                Container(
+                                                  color: Colors.transparent,
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      ClipRRect(
+                                                        child: CachedNetworkImage(
+                                                          imageUrl:waitImage.length>0?waitImage[index]:img[index],
+                                                          fit: BoxFit.cover,
+                                                          placeholder: (_,s)=>
+                                                              SpinKitFadingCircle(
+                                                                color: cLogoColor,
+                                                                size: 30,
+                                                              ),
+                                                        ),
+                                                        borderRadius:BorderRadius.circular(8) ,
+                                                      ),
+                                                      SizedBox(height: 3,),
+                                                      Text( waitMessage.length>0?
+                                                      waitMessage[index]:messages[index],
+                                                        /*index < messages.length ?
+                                                  messages[index]: wait[index-messages.length],*/
+                                                        textAlign: TextAlign.right,
+                                                        style: TextStyle(
+                                                          color:waitIsSender.length>0?( waitIsSender[index]
+                                                              ? clogoBlack
+                                                              : Colors.white):( isSender[index]
+                                                              ? clogoBlack
+                                                              : Colors.white),
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight.w200,
+                                                        ),)
+
+                                                    ],
+                                                  ),
+                                                ):
+
+                                                Text(
                                                   waitMessage.length>0?
                                                   waitMessage[index]:messages[index],
                                                   /*index < messages.length ?
@@ -246,7 +319,8 @@ class _chatScreenState extends State<chatScreen> {
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w200,
                                                   ),
-                                                ),
+                                                )
+                                                ,
                                               ),
                                             ),
                                           );
@@ -261,120 +335,42 @@ class _chatScreenState extends State<chatScreen> {
                                   ),
                                   Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          8, 0, 8, 10),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            // height:50,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width -
-                                                80,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(30)),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(4),
-                                              child: TextField(
+                                    child: chatWriteMessage(MediaQuery.of(context).size.width,messageFocusNode,messageController,(){
 
-                                                focusNode: messageFocusNode,
-                                                  keyboardType:TextInputType.multiline,
-                                                  maxLines: null,
-                                                  textAlign: TextAlign.right,
-                                                  style: TextStyle(
-                                                      fontFamily: fArabicFont,
-                                                      fontSize: 25,
-                                                      color: clogoBlack),
-                                                  controller: messageController,
-                                                  decoration: InputDecoration(
-                                                    hintText: sHintWriteMessage,
-                                                    hintStyle: TextStyle(
-                                                        fontFamily: fArabicFont,
-                                                        color: clightOrange),
-                                                    contentPadding:
-                                                        EdgeInsets.fromLTRB(
-                                                            16, 6, 16, 0),
-                                                    enabledBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors
-                                                              .transparent),
-                                                    ),
-                                                    focusedBorder:
-                                                        UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors
-                                                              .transparent),
-                                                    ),
-
-                                                  )
-                                              ,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          CircleAvatar(
-                                            radius: 25,
-                                            backgroundColor: clightOrange,
-                                            child: IconButton(
-                                              icon: Icon(
-                                                Icons.send,
-                                                color: clogoBlack,
-                                              ),
-                                              iconSize: 30,
-                                              onPressed: () {
+                                      setState(() {
+                                        if (waitMessage.isEmpty) {
+                                          for (int i = 0; i <
+                                              chat.length; i++) {
+                                            waitMessage.insert(i,
+                                                chat[i]["node"]['message']);
+                                            waitIsSender.insert(i,
+                                                chat[i]["node"]['isSender']);
+                                            waitImage.insert(i,
+                                                chat[i]["node"]['image']);
 
 
-
-                                          setState(() {
-                                            if (waitMessage.isEmpty) {
-                                              for (int i = 0; i <
-                                                  chat.length; i++) {
-                                                waitMessage.insert(i,
-                                                    chat[i]["node"]['message']);
-                                                waitIsSender.insert(i,
-                                                    chat[i]["node"]['isSender']);
-
-                                              }
-
-                                            }    waitMessage.insert(
-                                                waitMessage.length,
-                                                messageController.text);
-                                            waitIsSender.insert(
-                                                waitIsSender.length, true);
-
-
-
-                                          });
-                                                runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true},);
-                                             messageController.clear();
-                                           messageFocusNode= FocusNode();
-                                           messageFocusNode.requestFocus();
-                                        /*  Timer(
-                                              Duration(microseconds:2000),(){
-                                                print("timer");
-                                                print(waitMessage.length);
-                                                itemScrollController.scrollTo(
-                                                    index:waitMessage.length-1,
-                                                    duration: Duration(milliseconds: 2000),
-                                                    curve: Curves.easeInOutCubic);  //waitMessage.length>0?waitMessage.length-1:messages.length-1
                                           }
-                                          );*/
+
+                                        }    waitMessage.insert(
+                                            waitMessage.length,
+                                            messageController.text);
+                                        waitIsSender.insert(
+                                            waitIsSender.length, true);
+                                       waitImage.insert(waitImage.length,
+                                            '');
 
 
 
-                                              },
 
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                      });
+                                      runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true,'img':''},);
+                                      messageController.clear();
+                                      messageFocusNode= FocusNode();
+                                      messageFocusNode.requestFocus();
+
+
+
+                                    })
                                   ),
                                 ],
                               );
