@@ -5,25 +5,19 @@ import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/roots/strings.dart';
 import 'package:homestyle/screens/welcomeScreen.dart';
 //GraphQLConfiguration config= GraphQLConfiguration();
+import 'package:firebase_messaging/firebase_messaging.dart';
+FirebaseMessaging fc= FirebaseMessaging();
 void main() {
-
  // WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
-
-
-
   @override
   Widget build(BuildContext context) {
-
-
-
-    return MaterialApp(
+   return MaterialApp(
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
         cursorColor: clightOrange,

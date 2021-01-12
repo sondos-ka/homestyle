@@ -30,6 +30,9 @@ dependencies:
   cached_network_image: ^2.0.0
   flutter_chat_bubble: ^1.0.2
   scrollable_positioned_list: ^0.1.8
+  image_downloader: ^0.20.1
+  firebase_messaging: ^7.0.3
+
 
 
 
