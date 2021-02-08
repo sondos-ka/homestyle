@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -16,7 +19,12 @@ import 'package:homestyle/screens/productScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'favoriteScreen.dart';
 import 'loginScreen.dart';
+import 'package:homestyle/roots/notification.dart';
+
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+
+
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 
@@ -82,13 +90,12 @@ class _chatScreenState extends State<chatScreen> {
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      resizeToAvoidBottomInset: true,
-
-      backgroundColor: clogoBlack,
+      resizeToAvoidBottomInset: true,backgroundColor: clogoBlack,
       appBar: appBarWidget(() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.remove('username');
         currentUser = null;
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -135,7 +142,13 @@ class _chatScreenState extends State<chatScreen> {
                               waitImage.clear();
 
                           } );
-                        print('completed');
+
+
+                   print('completed');
+                   MyNotification myNotification=MyNotification();
+                   myNotification.sendFcmMessage("FINALLY","send message");
+
+
 
                   }),
               builder: (
@@ -367,6 +380,10 @@ class _chatScreenState extends State<chatScreen> {
                                       messageController.clear();
                                       messageFocusNode= FocusNode();
                                       messageFocusNode.requestFocus();
+
+
+
+
 
 
 

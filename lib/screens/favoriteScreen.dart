@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -33,6 +34,7 @@ class _favoriteScreenState extends State<favoriteScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove('username');
       currentUser=null;
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => GraphQLProvider(

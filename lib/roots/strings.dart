@@ -22,4 +22,8 @@ String sOk="موافق";
 String sFavorite="المفضلة";
 String sChat="المحادثة";
 String sHintWriteMessage="اكتب الرسالة";
+String sMessageEnterName=" الرجاء ادخال اسم المستخدم";
+String sMessageEnterPassword="الرجاء ادخال كلمة المرور";
+String sMessageErorrNameOrPassword="اسم المستخدم أو كلمة المرور غير صحيحة";
+
 

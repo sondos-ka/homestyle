@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/roots/dataBase.dart';
@@ -16,7 +21,7 @@ class loginScreen extends StatefulWidget {
   _loginScreenState createState() => _loginScreenState();
 }
 
-class _loginScreenState extends State<loginScreen>   with TickerProviderStateMixin{
+class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixin{
 
   String username;
   String password;
@@ -85,28 +90,97 @@ class _loginScreenState extends State<loginScreen>   with TickerProviderStateMix
                                        ,
                                        Mutation(
                                         options: MutationOptions(
-                                        documentNode: gql(queryAddUser), // this is the mutation string you just created
+                                        documentNode: gql(loginMutation),
+                                          onCompleted: (dynamic result) async {
+                                          try{
+
+                                            var d=result.data["logIn"]["viewer"]["sessionToken"];
+                                            if(d!=null) {
+
+                                              SharedPreferences prefs = await SharedPreferences
+                                                  .getInstance();
+                                              prefs.setString(
+                                                  'username', username);
+                                              //for close indicator dialog
+                                              Navigator.pop(context);
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        menuScreen()),
+                                              );
+                                            }
+
+
+
+
+                                            }catch(e){
+
+                                            Navigator.pop(context);
+                                            Fluttertoast.showToast(
+                                                msg: sMessageErorrNameOrPassword,
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: clightOrange,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,);
+
+                                            }
+
+
+
+                                          }
                                         ),
                                         builder: (
                                         RunMutation runMutation,
                                         QueryResult result,
+
                                         ) {
-                                        return awsomeButton(sLogin,()async{
+                                        return awsomeButton(sLogin,(){
                                          username=nameController.text;
                                          password=passwordController.text;
-                                         if(username!=null&& password!=null){
-                                           runMutation({'name':username,'password':password});
-                                           SharedPreferences prefs = await SharedPreferences.getInstance();
-                                           prefs.setString('username', username);
-                                           if(result.data!=null){
-                                             print('success');}
+                                         if(username.length!=0&& password.length!=0){
+
+                                          runMutation({'name':username,'password':password});
+
+
+                                                  showAnimatedDialog(
+                                                  context: context,
+                                                  builder: (_) {
+                                                    return SpinKitFadingCircle(
+                                                      color: cLogoColor,
+                                                      size: 60,
+                                                    );
+                                                  });
+
+                                           }
+
+
+                                         else if(username.length==0) {
+                                           Fluttertoast.showToast(
+                                               msg: sMessageEnterName,
+                                               toastLength: Toast.LENGTH_SHORT,
+                                               gravity: ToastGravity.CENTER,
+                                               timeInSecForIosWeb: 1,
+                                               backgroundColor: clightOrange,
+                                               textColor: Colors.white,
+                                               fontSize: 16.0,
+
+                                           );
                                          }
+                                         else if(password.length==0){
+                                           Fluttertoast.showToast(
+                                               msg: sMessageEnterPassword,
+                                               toastLength: Toast.LENGTH_SHORT,
+                                               gravity: ToastGravity.CENTER,
+                                               timeInSecForIosWeb: 1,
+                                               backgroundColor: clightOrange,
+                                               textColor: Colors.white,
+                                               fontSize: 16.0
+                                           );
 
-
-                                         Navigator.pushReplacement(
-                                           context,
-                                           MaterialPageRoute(builder: (context) => menuScreen()),
-                                         );
+                                         }
 
                                        });}
     )

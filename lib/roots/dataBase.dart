@@ -35,6 +35,26 @@ const queryAddUser = '''
 ''';
 
 
+const loginMutation="""
+mutation LogIn(\$name:String!,\$password:String!){
+  logIn(input: {
+    username: \$name
+    password: \$password
+  }){
+    viewer{
+      
+      sessionToken
+    }
+  }
+}
+
+""";
+
+
+
+
+
+
 
 const mutationLogInUser = '''
 mutation Createuser(\$name:String!,\$password:String!){

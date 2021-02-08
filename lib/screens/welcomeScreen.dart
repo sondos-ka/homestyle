@@ -3,6 +3,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:homestyle/roots/constant.dart';
@@ -26,10 +27,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       @override
   void initState() {
     super.initState();
-
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     new Future.delayed (
         const Duration(seconds: 6),
             () async{
+
               SharedPreferences prefs = await SharedPreferences.getInstance();
               var curUser= prefs.getString('username');
 
