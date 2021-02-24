@@ -28,6 +28,8 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   DataBase dataBase;
+  GraphQLConfiguration configuration = GraphQLConfiguration();
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +109,11 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        menuScreen()),
+                                                        GraphQLProvider(
+                                                          child: menuScreen(),
+                                                          client: configuration.client,), ),
                                               );
                                             }
-
-
-
 
                                             }catch(e){
 
@@ -131,6 +132,7 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
 
 
                                           }
+
                                         ),
                                         builder: (
                                         RunMutation runMutation,
@@ -144,8 +146,7 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
 
                                           runMutation({'name':username,'password':password});
 
-
-                                                  showAnimatedDialog(
+                                          showAnimatedDialog(
                                                   context: context,
                                                   builder: (_) {
                                                     return SpinKitFadingCircle(
@@ -154,10 +155,7 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
                                                     );
                                                   });
 
-                                           }
-
-
-                                         else if(username.length==0) {
+                                           }else if(username.length==0) {
                                            Fluttertoast.showToast(
                                                msg: sMessageEnterName,
                                                toastLength: Toast.LENGTH_SHORT,

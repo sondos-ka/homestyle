@@ -6,6 +6,7 @@ import 'package:homestyle/roots/strings.dart';
 
 int currentCategory=0;
 String curUser="";
+String curToken="";
 
 //logo
 const Color cLogoColor= Color(0xFFf48e2c);

@@ -42,7 +42,6 @@ mutation LogIn(\$name:String!,\$password:String!){
     password: \$password
   }){
     viewer{
-      
       sessionToken
     }
   }
@@ -108,6 +107,23 @@ query Favorite(\$userId:String!,\$cat:Float!){
 	      }
 	    }
 	  }
+	  
+	  
+	  
+	   sessions(
+    where: {user:{have:{username:{equalTo:\$userId}}} },
+    last:1
+    
+  ) {
+  
+    edges {
+      
+      node {
+        sessionToken
+        createdAt
+        }
+    }
+  }
 }
 """;
 
@@ -286,6 +302,13 @@ mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!,\$img
 
 
 
+""";
+
+
+const getToken="""
+query getToken(\$username:String!) {
+ 
+}
 """;
 /*mutation delete_all_articles {
   objects{

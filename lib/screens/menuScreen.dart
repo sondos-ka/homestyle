@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:homestyle/roots/constant.dart';
+import 'package:homestyle/roots/dataBase.dart';
 import 'package:homestyle/roots/rootWidget.dart';
 import 'package:homestyle/screens/loginScreen.dart';
 import 'package:homestyle/screens/productScreen.dart';
@@ -31,6 +32,9 @@ class _menuScreenState extends State<menuScreen> {
     super.initState();
     categories = menuItems().createMenuItemList();
 
+
+
+
   }
   @override
   void dispose() {
@@ -44,7 +48,10 @@ class _menuScreenState extends State<menuScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     currentUser=prefs.get('username');
     print(currentUser);
+
+
   }
+
   @override
   Widget build(BuildContext context) {
 

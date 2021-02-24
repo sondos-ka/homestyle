@@ -31,12 +31,12 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 // final _cahtListController = ScrollController();
 List messages = new List();
-List waitMessage=new List();
-List waitIsSender=new List();
-List waitImage=new List();
-
 List isSender = new List();
 List img=new List();
+List <String>waitMessage=new List();
+List <bool> waitIsSender=new List();
+List <String> waitImage=new List();
+
 final messageController = TextEditingController();
 FocusNode messageFocusNode ;
 final ItemScrollController itemScrollController = ItemScrollController();
@@ -145,10 +145,8 @@ class _chatScreenState extends State<chatScreen> {
 
 
                    print('completed');
-                   MyNotification myNotification=MyNotification();
-                   myNotification.sendFcmMessage("FINALLY","send message");
-
-
+                  // MyNotification myNotification=MyNotification();
+                  // myNotification.sendFcmMessage("FINALLY","send message");
 
                   }),
               builder: (
@@ -182,7 +180,7 @@ class _chatScreenState extends State<chatScreen> {
                       ),
                       child: Query(
                           options: QueryOptions(
-                            pollInterval: 3,
+                            pollInterval: 4,
                             variables: {
                               'userId': currentUser,
                             },
@@ -221,11 +219,6 @@ class _chatScreenState extends State<chatScreen> {
                                 children: <Widget>[
                                   Expanded(
                                     child: ScrollablePositionedList.builder(
-                                     /*  ,
-                                        ,
-
-                                        */
-
 
                                         physics: const AlwaysScrollableScrollPhysics (),
 
@@ -349,9 +342,10 @@ class _chatScreenState extends State<chatScreen> {
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: chatWriteMessage(MediaQuery.of(context).size.width,messageFocusNode,messageController,(){
-
                                       setState(() {
-                                        if (waitMessage.isEmpty) {
+
+                                    if (waitMessage.isEmpty && chat.length>0) {
+                                          //todo
                                           for (int i = 0; i <
                                               chat.length; i++) {
                                             waitMessage.insert(i,
@@ -360,32 +354,38 @@ class _chatScreenState extends State<chatScreen> {
                                                 chat[i]["node"]['isSender']);
                                             waitImage.insert(i,
                                                 chat[i]["node"]['image']);
-
-
+                                            print("i in if condation $i");
                                           }
+                                        }
+                                    String curMessage=messageController.text;
 
-                                        }    waitMessage.insert(
-                                            waitMessage.length,
-                                            messageController.text);
-                                        waitIsSender.insert(
-                                            waitIsSender.length, true);
-                                       waitImage.insert(waitImage.length,
-                                            '');
 
+
+
+                                     //add time because I had an exception when send first message with wait it disappear
+                                     Timer(Duration(milliseconds:waitMessage.length>0?0:400),(){
+                                        waitMessage.insert(
+                                          waitMessage.length,
+                                          curMessage
+                                        // messageController.text
+                                      );
+                                      waitIsSender.insert(
+                                          waitIsSender.length, true);
+                                      waitImage.insert(waitImage.length,
+                                          '');
+                                      print("add this message ");
+
+                                      print(waitIsSender[0]);
+                                      })   ;
 
 
 
                                       });
+
                                       runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true,'img':''},);
                                       messageController.clear();
                                       messageFocusNode= FocusNode();
                                       messageFocusNode.requestFocus();
-
-
-
-
-
-
 
                                     })
                                   ),

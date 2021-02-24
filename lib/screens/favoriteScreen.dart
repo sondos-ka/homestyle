@@ -235,7 +235,7 @@ class _favoriteScreenState extends State<favoriteScreen> {
                                                                 .transparent,
                                                             insetPadding: EdgeInsets
                                                                 .only(
-                                                                top: 60),
+                                                                top: 90),
                                                             child: Stack(
                                                               alignment: Alignment
                                                                   .topLeft,

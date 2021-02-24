@@ -8,7 +8,8 @@ import 'constant.dart';
 
 
 Widget appBarWidget(Function logout,Widget favorite,Widget chat,double width ){
-  return  width<500? AppBar(
+  return  width<500? AppBar(  leading: BackButton(
+      color: cLogoColor),
     titleSpacing: 0,
     title:Padding(
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
@@ -65,8 +66,8 @@ Widget appBarWidget(Function logout,Widget favorite,Widget chat,double width ){
 
 //AppBar Background and image
 Widget appBarMenuWidget(Function logout,Widget favorite,Widget chat  ){
-  return AppBar(
-
+  return AppBar(   leading: BackButton(
+      color: cLogoColor),
    title:Padding(
    padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
     child:   Container(
@@ -249,7 +250,6 @@ Widget chatWriteMessage(width,messageFocusNode,messageController,Function onPres
     child: Row(
       children: <Widget>[
         Container(
-
           width: width - 80,
           decoration: BoxDecoration(
               color: Colors.white,
