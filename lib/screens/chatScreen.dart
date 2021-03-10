@@ -105,7 +105,37 @@ class _chatScreenState extends State<chatScreen> {
               ),
             ));
       },
-          Text(""),
+    Mutation(
+          options: MutationOptions(
+
+          documentNode: //isFavorite?
+          gql(setUnreadMessagesZero)//
+        // :gql(addToFavorite)
+        ,
+        update: (Cache cache, QueryResult result) {
+
+          return cache;
+        },
+        onCompleted: (dynamic resultData)
+        {
+         //update current user messages to zero
+        }
+    ),
+
+
+    builder: (RunMutation runMutation1,
+    QueryResult result,) {
+
+    return Query(
+      options: QueryOptions(
+      documentNode: gql(getAdminObjectId),
+      ),
+      builder:(QueryResult resultAppBar, { Refetch refetch,FetchMore fetchMore,}) {
+        runMutation1({'objectId':curUserObjectId});
+        curReceiverObjectId=resultAppBar.data["users"]["edges"][0]["node"]["objectId"];
+
+        return Text("");});},
+    ),
           IconButton(
               icon: Icon(Icons.favorite_border, color: cLogoColor, size: 20),
               onPressed: () {
@@ -143,8 +173,6 @@ class _chatScreenState extends State<chatScreen> {
 
                           } );
 
-
-                   print('completed');
                   // MyNotification myNotification=MyNotification();
                   // myNotification.sendFcmMessage("FINALLY","send message");
 
@@ -183,6 +211,7 @@ class _chatScreenState extends State<chatScreen> {
                             pollInterval: 4,
                             variables: {
                               'userId': currentUser,
+                              'adminId':"admin"
                             },
                             documentNode: gql(getMessages),
                           ),
@@ -199,6 +228,12 @@ class _chatScreenState extends State<chatScreen> {
                             } else {
 
                            //   messageFocusNode.requestFocus();
+
+                              //get the admin message count to increase it
+                              curAdminMessage=result.data["users"]["edges"][0]["node"]["unreadMessages"];
+                              var tokenResult=result.data["sessions"]["edges"];
+                              curToken=tokenResult[0]["node"]["sessionToken"];
+
                              List chat=result.data["chats"]["edges"];
                              messages.clear();
                             isSender.clear();
@@ -381,11 +416,43 @@ class _chatScreenState extends State<chatScreen> {
 
 
                                       });
+                                      curAdminMessage++;
 
-                                      runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true,'img':''},);
-                                      messageController.clear();
-                                      messageFocusNode= FocusNode();
-                                      messageFocusNode.requestFocus();
+                                      runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true,'img':'','objectId':curReceiverObjectId,'adminMessagesCount':curAdminMessage},);
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+
+    Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+      await firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: false),
+      );
+
+      await http.post(
+        'https://fcm.googleapis.com/fcm/send',
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'key=$fireBaseServerKey',
+        },
+        body: jsonEncode(
+          <String, dynamic>{
+            'notification': <String, dynamic>{
+              'body': 'this is a body',
+              'title': 'this is a title'
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'id': '1',
+              'status': 'done'
+            },
+            'to': curToken,
+          },
+        ),
+      );
+    }
+    messageController.clear();
+    messageFocusNode= FocusNode();
+    messageFocusNode.requestFocus();
 
                                     })
                                   ),

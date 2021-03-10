@@ -34,7 +34,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
               SharedPreferences prefs = await SharedPreferences.getInstance();
               var curUser= prefs.getString('username');
-
               Navigator.pushReplacement(
 
                   context,

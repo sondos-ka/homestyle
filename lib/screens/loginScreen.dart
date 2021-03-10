@@ -65,7 +65,7 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
                                child: Container(
                                  height:(MediaQuery.of(context).size.height/3+50),
                                  width:  (MediaQuery.of(context).size.width/3+100) ,
-                              
+
                                  child: Padding(
                                    padding: const EdgeInsets.only(left:15),
                                    child: Column(
@@ -139,48 +139,51 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
                                         QueryResult result,
 
                                         ) {
-                                        return awsomeButton(sLogin,(){
-                                         username=nameController.text;
-                                         password=passwordController.text;
-                                         if(username.length!=0&& password.length!=0){
+                                        return  awsomeButton(sLogin,(){
+                                          username=nameController.text;
+                                          password=passwordController.text;
+                                          if(username.length!=0&& password.length!=0){
 
                                           runMutation({'name':username,'password':password});
 
                                           showAnimatedDialog(
-                                                  context: context,
-                                                  builder: (_) {
-                                                    return SpinKitFadingCircle(
-                                                      color: cLogoColor,
-                                                      size: 60,
-                                                    );
-                                                  });
+                                          context: context,
+                                          builder: (_) {
+                                          return SpinKitFadingCircle(
+                                          color: cLogoColor,
+                                          size: 60,
+                                          );
+                                          });
 
-                                           }else if(username.length==0) {
-                                           Fluttertoast.showToast(
-                                               msg: sMessageEnterName,
-                                               toastLength: Toast.LENGTH_SHORT,
-                                               gravity: ToastGravity.CENTER,
-                                               timeInSecForIosWeb: 1,
-                                               backgroundColor: clightOrange,
-                                               textColor: Colors.white,
-                                               fontSize: 16.0,
+                                          }else if(username.length==0) {
+                                          Fluttertoast.showToast(
+                                          msg: sMessageEnterName,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: clightOrange,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
 
-                                           );
-                                         }
-                                         else if(password.length==0){
-                                           Fluttertoast.showToast(
-                                               msg: sMessageEnterPassword,
-                                               toastLength: Toast.LENGTH_SHORT,
-                                               gravity: ToastGravity.CENTER,
-                                               timeInSecForIosWeb: 1,
-                                               backgroundColor: clightOrange,
-                                               textColor: Colors.white,
-                                               fontSize: 16.0
-                                           );
+                                          );
+                                          }
+                                          else if(password.length==0){
+                                          Fluttertoast.showToast(
+                                          msg: sMessageEnterPassword,
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: clightOrange,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                          );
 
-                                         }
+                                          }
 
-                                       });}
+                                          }
+                                          );
+
+                                        }
     )
                                      ],
                                    ),

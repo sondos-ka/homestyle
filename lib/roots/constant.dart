@@ -7,6 +7,10 @@ import 'package:homestyle/roots/strings.dart';
 int currentCategory=0;
 String curUser="";
 String curToken="";
+String curReceiverObjectId="";
+int curUnreadMessages=0;
+int curAdminMessage=0;
+String curUserObjectId="";
 
 //logo
 const Color cLogoColor= Color(0xFFf48e2c);
@@ -38,6 +42,7 @@ String kParseApplicationId= "qFIHGyTUjOQnBYXTSgBCdY79XXVYd6Dh0JDgHrOx";
 String kParseClientKey = "cxVMzfbQyUZj7cW5lEBGxMrI1mIZF6JMSzaBgmHD";
 String kParseMasterKey = "Y9kvMgaL02oFJqf5xJywm6XSFcDN7jKjIv1Xe6BM";
 String kUrl= "https://parseapi.back4app.com/graphql";
+String fireBaseServerKey="AAAAggu222A:APA91bEDR1-PYD9peF8gcYk4iIKc61S9GvrGYi5abPivHg4JIVXj1JuGQZW86pgBybGp_0KwuutIMZb6NsQTjnqjvVcyFX-eDV80lBTXsHr6C8_h7ZXWCDXRySw0_ndofthVZCXjFOzY";
 //////////////////////////////////////////////////////////////////////////////
 
 

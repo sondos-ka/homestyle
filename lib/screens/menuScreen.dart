@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -72,43 +74,44 @@ class _menuScreenState extends State<menuScreen> {
         child: OrientationBuilder(
           builder: (context,orientation){
           return ListView.builder(
-              itemCount: categories.length,
-              itemExtent:orientation==Orientation.portrait ? (MediaQuery.of(context).size.height-80)/5:(MediaQuery.of(context).size.height-80)/2 ,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  child: Hero(
-                    tag: 'title' + categories[index].title,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          alignment: categories[index].alignImage,
-                          image: AssetImage(categories[index].image,),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                itemCount: categories.length,
+                itemExtent:orientation==Orientation.portrait ? (MediaQuery.of(context).size.height-80)/5:(MediaQuery.of(context).size.height-80)/2 ,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    child: Hero(
+                      tag: 'title' + categories[index].title,
                       child: Container(
-                        alignment: categories[index].alignText,
-                          padding:EdgeInsets.fromLTRB(categories[index].left,0, categories[index].right, 0),
-                          child: Text(categories[index].title,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            alignment: categories[index].alignImage,
+                            image: AssetImage(categories[index].image,),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Container(
+                          alignment: categories[index].alignText,
+                            padding:EdgeInsets.fromLTRB(categories[index].left,0, categories[index].right, 0),
+                            child: Text(categories[index].title,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
+                      ),
                     ),
-                  ),
-                  onDoubleTap: () {
+                    onDoubleTap: () {
 
-                    currentCategory=index;
-                    getUserName();
-                    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown,DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>
-                            GraphQLProvider(
-                              child: productScreen(),
-                              client: configuration.client,),
-                        ));
-                  }
-                  ,
-                );
-              }
-              );}
+                      currentCategory=index;
+                      getUserName();
+                      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown,DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              GraphQLProvider(
+                                child: productScreen(),
+                                client: configuration.client,),
+                          ));
+                    }
+                    ,
+                  );
+                }
+                ,
+          );}
         ),
 
 

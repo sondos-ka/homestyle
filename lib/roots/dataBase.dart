@@ -110,20 +110,9 @@ query Favorite(\$userId:String!,\$cat:Float!){
 	  
 	  
 	  
-	   sessions(
-    where: {user:{have:{username:{equalTo:\$userId}}} },
-    last:1
-    
-  ) {
+	 
+   
   
-    edges {
-      
-      node {
-        sessionToken
-        createdAt
-        }
-    }
-  }
 }
 """;
 
@@ -252,7 +241,7 @@ query  (\$productId:[ID!]!){
 """;
 
 const getMessages="""
-query (\$userId:String!){
+query (\$userId:String!,\$adminId:String!){
   chats(where:{userId:{equalTo:\$userId}},order:createdAt_ASC){
      count,
 	    edges{
@@ -267,10 +256,37 @@ query (\$userId:String!){
         }
         } 
       }
+      
+       users(where:{username:{equalTo:\$adminId}}){
+    edges{
+      node{
+        unreadMessages
+      }
+    }
+  }
+ 
+    sessions(
+    where: {user:{have:{username:{equalTo:\$adminId}}} },
+    last:1
+    
+  ) {
+  
+    edges {
+      
+      node {
+        sessionToken
+    
+        }
+    }
+  }
+  
+  
+     
 }""";
 
+
 const mutationAddMessage="""
-mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!,\$img:String!){
+mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!,\$img:String!,\$objectId:ID!,\$adminMessagesCount:Float!){
        
  
   createChat(input:
@@ -289,25 +305,85 @@ mutation CreateChat(\$userId:String!,\$message:String!,\$isSender:Boolean!,\$img
       
     }
   }
+  updateUser(
+  input:{id:\$objectId,fields:{
+  unreadMessages:\$adminMessagesCount
+  
+  
+}},)
+  {
+    user{
+      
+    unreadMessages
+    }
+  }
+  
   
   
   
 }
 
-  
-          
-
-  
-
-
-
 
 """;
 
 
-const getToken="""
-query getToken(\$username:String!) {
+
+//in user app its admin
+//in admin app the name of user
+const getObjectId="""
+query getReciverId(\$username:String!){
+users(where:{username:{equalTo:\$username}})
+{edges
+  {node
+  {objectId
+  }
+  }
+}
+  
+  
+}""";
+
+const getUnreadMessages="""
+query  getUnread(\$userId:String!){
+  
+  users(where:{username:{equalTo:\$userId}}){
+    edges{
+      node{
+        unreadMessages
+        objectId
+      }
+    }
+  }
+}""";
+
+
+const getAdminObjectId="""
+query  {
+users(where:{username:{equalTo:"admin"}})
+{edges
+ {node
+  {objectId
+   }
+ }
  
+ }
+ }
+""";
+
+const setUnreadMessagesZero="""
+mutation CreateChat(\$objectId:ID!){
+       
+ 
+  updateUser(input:{id:\$objectId,fields:{
+  unreadMessages:0
+  }},) {
+    user{
+      unreadMessages
+    }
+  }
+  
+  
+  
 }
 """;
 /*mutation delete_all_articles {

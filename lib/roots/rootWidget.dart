@@ -16,11 +16,8 @@ Widget appBarWidget(Function logout,Widget favorite,Widget chat,double width ){
       child:   Container(
         width:450,
         height: 81,
-
-
         child: Row(
           children: <Widget>[
-
             Container(
               height: 50,
               width: 30,
