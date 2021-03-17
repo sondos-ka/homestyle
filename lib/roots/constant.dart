@@ -38,9 +38,9 @@ const String fArabicFont='Scheherazade-Regular';
 
 
 ////////////////////////////////////////Parse Server//////////////////////////////
-String kParseApplicationId= "qFIHGyTUjOQnBYXTSgBCdY79XXVYd6Dh0JDgHrOx";
-String kParseClientKey = "cxVMzfbQyUZj7cW5lEBGxMrI1mIZF6JMSzaBgmHD";
-String kParseMasterKey = "Y9kvMgaL02oFJqf5xJywm6XSFcDN7jKjIv1Xe6BM";
+String kParseApplicationId= "sFPRidnBcKcLp09ezqHCLXT0759egU7dKjhJ39tG";
+String kParseClientKey = "5kuzxoZeHaKXusFMgo7vuxx2ZUJVrSi6rb7juxMG";
+String kParseMasterKey = "kNvfj7fMMoyVfH2v6j0C92wrhv18Hnb90eRd83UI";
 String kUrl= "https://parseapi.back4app.com/graphql";
 String fireBaseServerKey="AAAAggu222A:APA91bEDR1-PYD9peF8gcYk4iIKc61S9GvrGYi5abPivHg4JIVXj1JuGQZW86pgBybGp_0KwuutIMZb6NsQTjnqjvVcyFX-eDV80lBTXsHr6C8_h7ZXWCDXRySw0_ndofthVZCXjFOzY";
 //////////////////////////////////////////////////////////////////////////////

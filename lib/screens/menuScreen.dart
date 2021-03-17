@@ -91,7 +91,7 @@ class _menuScreenState extends State<menuScreen> {
                         child: Container(
                           alignment: categories[index].alignText,
                             padding:EdgeInsets.fromLTRB(categories[index].left,0, categories[index].right, 0),
-                            child: Text(categories[index].title,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
+                            child: Text(categories[index].title,textScaleFactor: 1.0,style: TextStyle(fontSize: 27,fontFamily: fArabicFont,color:categories[index].Textcolor),),), /* add child content here */
                       ),
                     ),
                     onDoubleTap: () {

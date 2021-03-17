@@ -104,7 +104,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             alignment: Alignment.center,
                             speed: Duration(milliseconds: 2000),
                             controller: AnimatedTextController.play,
-                            displayTime: Duration(milliseconds: 1000),
+                            displayTime: Duration(milliseconds: 900),
                             wordList: ['the best idea', 'for your home'],
                             textStyle: TextStyle(
                                 color: Colors.white,

@@ -129,14 +129,10 @@ class _favoriteScreenState extends State<favoriteScreen> {
                             objects.insert(i, userFavorite[i]["node"]['objectId']);
                           }
 
-
-
-
-
                           return
                             Query(
                             options: QueryOptions(
-                              pollInterval: 10,
+                              pollInterval: 3,
                               variables: {
                                 'productId': products
 
@@ -294,8 +290,10 @@ class _favoriteScreenState extends State<favoriteScreen> {
                                                                                 int productIndex=products.indexOf(productFavorite[index2]["node"]['objectId']);
                                                                                 var objectId = objects[productIndex];
 
-                                                                                runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0});
+                                                                                runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0,'message':'','isSender':true,'img':''});
+
                                                                                 setState(() {
+
                                                                                   products.remove(productIndex);
                                                                                 });
                                                                               }
@@ -336,8 +334,8 @@ class _favoriteScreenState extends State<favoriteScreen> {
                                               Navigator.pop(context);
                                               int productIndex=products.indexOf(productFavorite[index2]["node"]['objectId']);
                                               var objectId = objects[productIndex];
-
-                                              runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0});
+                                              print("favorit id= $objectId");
+                                              runMutation({'favoriteId':objectId,'productId':'', 'userId':'','cat':0,'message':'','isSender':true,'img':''});
                                               setState(() {
                                                 products.remove(productIndex);
                                               });

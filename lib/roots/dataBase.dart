@@ -250,7 +250,6 @@ query (\$userId:String!,\$adminId:String!){
           createdAt
           message
           isSender
-          isRead
           image
           
         }

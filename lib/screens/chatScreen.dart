@@ -41,6 +41,37 @@ final messageController = TextEditingController();
 FocusNode messageFocusNode ;
 final ItemScrollController itemScrollController = ItemScrollController();
 final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
+
+Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
+  await firebaseMessaging.requestNotificationPermissions(
+    const IosNotificationSettings(
+        sound: true, badge: true, alert: true, provisional: false),
+  );
+
+  await http.post(
+    'https://fcm.googleapis.com/fcm/send',
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'key=$fireBaseServerKey',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        'notification': <String, dynamic>{
+          'body': 'this is a body',
+          'title': 'this is a title'
+        },
+        'priority': 'high',
+        'data': <String, dynamic>{
+          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+          'id': '1',
+          'status': 'done'
+        },
+        'to': curToken,
+      },
+    ),
+  );
+}
 
 
 bool checkIsImage(int i,List list1,List list2){
@@ -81,6 +112,7 @@ class _chatScreenState extends State<chatScreen> {
 
     super.initState();
 
+
   }
 
 
@@ -88,7 +120,10 @@ class _chatScreenState extends State<chatScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return
+      MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+    child: Scaffold(
       resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,backgroundColor: clogoBlack,
       appBar: appBarWidget(() async {
@@ -131,8 +166,12 @@ class _chatScreenState extends State<chatScreen> {
       documentNode: gql(getAdminObjectId),
       ),
       builder:(QueryResult resultAppBar, { Refetch refetch,FetchMore fetchMore,}) {
-        runMutation1({'objectId':curUserObjectId});
-        curReceiverObjectId=resultAppBar.data["users"]["edges"][0]["node"]["objectId"];
+
+         if(resultAppBar.data!=null){
+         runMutation1({'objectId':curUserObjectId});
+         curReceiverObjectId=resultAppBar.data["users"]["edges"][0]["node"]["objectId"];}
+
+
 
         return Text("");});},
     ),
@@ -376,7 +415,7 @@ class _chatScreenState extends State<chatScreen> {
                                   ),
                                   Align(
                                     alignment: Alignment.bottomCenter,
-                                    child: chatWriteMessage(MediaQuery.of(context).size.width,messageFocusNode,messageController,(){
+                                    child: chatWriteMessage(MediaQuery.of(context).size.width,messageFocusNode,messageController,()async{
                                       setState(() {
 
                                     if (waitMessage.isEmpty && chat.length>0) {
@@ -414,45 +453,14 @@ class _chatScreenState extends State<chatScreen> {
                                       })   ;
 
 
-
                                       });
                                       curAdminMessage++;
 
                                       runMutation({'message':messageController.text, 'userId':currentUser,'isSender':true,'img':'','objectId':curReceiverObjectId,'adminMessagesCount':curAdminMessage},);
-    final FirebaseMessaging firebaseMessaging = FirebaseMessaging();
-
-    Future<Map<String, dynamic>> sendAndRetrieveMessage() async {
-      await firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: false),
-      );
-
-      await http.post(
-        'https://fcm.googleapis.com/fcm/send',
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'key=$fireBaseServerKey',
-        },
-        body: jsonEncode(
-          <String, dynamic>{
-            'notification': <String, dynamic>{
-              'body': 'this is a body',
-              'title': 'this is a title'
-            },
-            'priority': 'high',
-            'data': <String, dynamic>{
-              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-              'id': '1',
-              'status': 'done'
-            },
-            'to': curToken,
-          },
-        ),
-      );
-    }
-    messageController.clear();
-    messageFocusNode= FocusNode();
-    messageFocusNode.requestFocus();
+                                      messageController.clear();
+                                      messageFocusNode= FocusNode();
+                                      messageFocusNode.requestFocus();
+                                      await sendAndRetrieveMessage();
 
                                     })
                                   ),
@@ -466,6 +474,6 @@ class _chatScreenState extends State<chatScreen> {
               }),
         ),
       ),
-    );
+    ));
   }
 }

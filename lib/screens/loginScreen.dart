@@ -33,7 +33,9 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+       child: Scaffold(
         resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
 
@@ -245,6 +247,6 @@ class _loginScreenState extends State<loginScreen>  with TickerProviderStateMixi
 
       ),
       ),
-    );
+    ));
   }
 }
