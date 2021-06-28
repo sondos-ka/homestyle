@@ -3,12 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:homestyle/roots/constant.dart';
 import 'package:homestyle/roots/strings.dart';
 import 'package:homestyle/screens/welcomeScreen.dart';
-//GraphQLConfiguration config= GraphQLConfiguration();
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-FirebaseMessaging fc= FirebaseMessaging();
-void main()async {
+
+void main() {
 
   runApp(MyApp());
 }

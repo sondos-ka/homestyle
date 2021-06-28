@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:homestyle/roots/strings.dart';
-
 import 'constant.dart';
+
 
 
 
@@ -39,7 +39,7 @@ Widget appBarWidget(Function logout,Widget favorite,Widget chat,double width ){
               child: chat
 
 
-      ),SizedBox(width: 10,),
+          ),SizedBox(width: 10,),
             Container(
               height: 50,
               width: 30,
